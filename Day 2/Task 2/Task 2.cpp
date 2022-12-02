@@ -41,12 +41,9 @@ int main()
         totalScore += battleOutcomeScore[battleOutcome];
         
         Node* search = head;
-        while (true) {
-            if (search->element == elfElement) {
-                break;
-            }
+        while (search->element != elfElement)
             search = search->winsOver;
-        }
+        
         if (battleOutcome == 'X')
             totalScore += elementScore[search->losesTo->element];
 
