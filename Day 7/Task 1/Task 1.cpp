@@ -24,12 +24,16 @@ int main()
         
         if (fhandle.eof() || terminalCommand == "$ cd ..") {
 
-            if (folderTree && folderTree->GetWeight() < 100000)
-                totalWeightsBelow100k += folderTree->GetWeight();
-            //memory safe, no need to check for folderTree != nullptr
-            folderTree->PropagateWeightBackwards();
-            folderTree = folderTree->EraseAndMoveUp();
-            
+            while (folderTree) {
+                if(folderTree->GetWeight() < 100000)
+                    totalWeightsBelow100k += folderTree->GetWeight();
+                folderTree->PropagateWeightBackwards();
+                folderTree = folderTree->EraseAndMoveUp();
+
+                if (fhandle) // false only at eof
+                    break;
+            }
+                
             if (!fhandle)
                 break;
         }
